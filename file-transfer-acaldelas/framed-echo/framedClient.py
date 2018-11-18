@@ -26,20 +26,22 @@ switchesVarDefaults = (
     (('-d', '--debug'), "debug", False), # boolean (set if present)
     (('-?', '--usage'), "usage", False), # boolean (set if present)
     )
-print(type(switchesVarDefaults))
-print(switchesVarDefaults)
 progname = "framedClient"
 #Function call to params for parsing the parameters
+#Also checks if any changes were made
 paramMap = params.parseParams(switchesVarDefaults)
-
+#Lookup in the dictionary what server contains and the rest contain
 server, usage, debug  = paramMap["server"], paramMap["usage"], paramMap["debug"]
 
+#Run usage from params if required
 if usage:
     params.usage()
 
 
 try:
+    #split string by occurrences of pattern. So whereever the : is
     serverHost, serverPort = re.split(":", server)
+    #Chane the port into num
     serverPort = int(serverPort)
 except:
     print("Can't parse server:port from '%s'" % server)
@@ -47,7 +49,7 @@ except:
 
 s = None
 for res in socket.getaddrinfo(serverHost, serverPort, socket.AF_UNSPEC, socket.SOCK_STREAM):
-    af, socktype, proto, canonname, sa = res
+    af, socktype, proto, canonname, sa= res
     try:
         print("creating sock: af=%d, type=%d, proto=%d" % (af, socktype, proto))
         s = socket.socket(af, socktype, proto)
