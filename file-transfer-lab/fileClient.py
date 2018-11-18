@@ -80,4 +80,3 @@ print("received:", framedReceive(s, debug))
 print("sending hello world")
 framedSend(s, b"hello world", debug)
 print("received:", framedReceive(s, debug))
-
