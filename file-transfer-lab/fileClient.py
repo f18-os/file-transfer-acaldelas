@@ -25,13 +25,13 @@ switchesVarDefaults = (
     (('-s', '--server'), 'server', "127.0.0.1:50001"),
     (('-d', '--debug'), "debug", False), # boolean (set if present)
     (('-?', '--usage'), "usage", False), # boolean (set if present)
-    )
+    (('-f', '--file'), 'filename', 'demo.txt')) #Added a default if the file isn't there
 progname = "framedClient"
 #Function call to params for parsing the parameters
 #Also checks if any changes were made
 paramMap = params.parseParams(switchesVarDefaults)
 #Lookup in the dictionary what server contains and the rest contain
-server, usage, debug  = paramMap["server"], paramMap["usage"], paramMap["debug"]
+server, usage, debug, filename  = paramMap["server"], paramMap["usage"], paramMap["debug"], paramMap["filename"]
 
 #Run usage from params if required
 if usage:
@@ -72,7 +72,24 @@ if s is None:
     print('could not open socket')
     sys.exit(1)
 
+print("Okay our file needs to be divided")
 
+with open(filename, 'rb') as sf:
+    #Using an online reference
+    csFR.send(b'BEGIN')
+    while True:
+        data = sf.read(1024)
+        print("Sending data",data.decod('utf-8'))
+        s.send(data)
+        if not data:
+            print("Done")
+            break
+    s.send(b'ENDED')
+    sf.close()
+
+"""
+print("Recieving")
+    
 print("sending hello world")
 framedSend(s, b"hello world", debug)
 print("received:", framedReceive(s, debug))
@@ -80,3 +97,4 @@ print("received:", framedReceive(s, debug))
 print("sending hello world")
 framedSend(s, b"hello world", debug)
 print("received:", framedReceive(s, debug))
+"""
