@@ -5,6 +5,8 @@
 import sys, os, socket
 
 sys.path.append("../lib")       # for params
+
+
 import params
 switchesVarDefaults = (
     (('-l', '--listenPort') ,'listenPort', 50001),

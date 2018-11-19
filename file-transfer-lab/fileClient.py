@@ -76,10 +76,10 @@ print("Okay our file needs to be divided")
 
 with open(filename, 'rb') as sf:
     #Using an online reference
-    csFR.send(b'BEGIN')
+    s.send(b'BEGIN')
     while True:
         data = sf.read(1024)
-        print("Sending data",data.decod('utf-8'))
+        print("Sending data",data.decode('utf-8'))
         s.send(data)
         if not data:
             print("Done")
