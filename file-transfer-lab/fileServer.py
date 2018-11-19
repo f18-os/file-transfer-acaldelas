@@ -2,10 +2,10 @@
 
 
 
-import sys, os, socket, params
+import sys, os, socket
 
 sys.path.append("../lib")       # for params
-
+import params
 switchesVarDefaults = (
     (('-l', '--listenPort') ,'listenPort', 50001),
     (('-d', '--debug'), "debug", False), # boolean (set if present)
